@@ -31,36 +31,95 @@ class _HomeState extends State<Home> {
             "${perguntaAtual + 1} / ${perguntas.length}",
             style: const TextStyle(fontSize: 20),
           ),
-          Text(
-            perguntas[perguntaAtual].utterance,
-            style: const TextStyle(fontSize: 20),
-          ),
-          const SizedBox(
+          Divider(
+            color: Colors.grey[300],
             height: 20,
+            thickness: 2.0,
           ),
-          ElevatedButton(
-            onPressed: () {
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: Text(
+              perguntas[perguntaAtual].utterance,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+          Divider(
+            color: Colors.grey[300],
+            height: 20,
+            thickness: 2.0,
+          ),
+          ...perguntas[perguntaAtual]
+              .options
+              .map(
+                (e) => GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    height: 60,
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 20.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 20.0),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        border: Border.all(color: Colors.white, width: 2),
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black38,
+                            offset: Offset(
+                              0,
+                              2,
+                            ),
+                            blurRadius: 4.0,
+                          ),
+                        ]),
+                    child: Text(
+                      e,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              )
+              .toList(),
+          SizedBox(height: 50),
+          GestureDetector(
+            onTap: () {
               proximaPergunta();
             },
-            child: Text(perguntas[perguntaAtual].options[0]),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              proximaPergunta();
-            },
-            child: Text(perguntas[perguntaAtual].options[1]),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              proximaPergunta();
-            },
-            child: Text(perguntas[perguntaAtual].options[2]),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              proximaPergunta();
-            },
-            child: Text(perguntas[perguntaAtual].options[3]),
+            child: Container(
+              width: double.infinity,
+              height: 60,
+              alignment: Alignment.center,
+              margin:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              decoration: BoxDecoration(
+                  color: Colors.red[200],
+                  border: Border.all(color: Colors.redAccent, width: 2),
+                  borderRadius: BorderRadius.circular(5),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black38,
+                      offset: Offset(
+                        0,
+                        2,
+                      ),
+                      blurRadius: 4.0,
+                    ),
+                  ]),
+              child: Text(
+                "Proxima pergunta",
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
           ),
         ],
       ),
