@@ -9,15 +9,30 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
+enum StatusPergunta { aguardando, respondida }
+
 class _HomeState extends State<Home> {
   final List<Question> perguntas = QuestionsRepository().createQuestions(5);
   int perguntaAtual = 0;
+  String opcaoSelecionada = "";
+
+  StatusPergunta statusPergunta = StatusPergunta.aguardando;
+
+  void registraResposta(String e) {
+    if (statusPergunta == StatusPergunta.aguardando) {
+      setState(() {
+        opcaoSelecionada = e;
+        statusPergunta = StatusPergunta.respondida;
+      });
+    }
+  }
 
   void proximaPergunta() {
     setState(() {
       if (perguntaAtual < perguntas.length - 1) {
         perguntaAtual += 1;
       }
+      statusPergunta = StatusPergunta.aguardando;
     });
   }
 
@@ -55,7 +70,9 @@ class _HomeState extends State<Home> {
               .options
               .map(
                 (e) => GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    registraResposta(e);
+                  },
                   child: Container(
                     width: double.infinity,
                     height: 60,
@@ -66,7 +83,15 @@ class _HomeState extends State<Home> {
                         vertical: 12.0, horizontal: 20.0),
                     decoration: BoxDecoration(
                         color: Colors.grey[300],
-                        border: Border.all(color: Colors.white, width: 2),
+                        border: Border.all(
+                            color: statusPergunta == StatusPergunta.respondida
+                                ? e == opcaoSelecionada
+                                    ? e == perguntas[perguntaAtual].answer
+                                        ? Colors.green
+                                        : Colors.red
+                                    : Colors.white
+                                : Colors.white,
+                            width: 2),
                         borderRadius: BorderRadius.circular(5),
                         boxShadow: const [
                           BoxShadow(
