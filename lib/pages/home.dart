@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/models/question.dart';
 import 'package:quiz/repository/questions.dart';
+import 'package:quiz/widgets/button.dart';
 import 'package:quiz/widgets/option.dart';
 
 class Home extends StatefulWidget {
@@ -143,41 +144,11 @@ class _HomeState extends State<Home> {
                     .toList(),
                 const SizedBox(height: 50),
                 statusPergunta == StatusPergunta.respondida
-                    ? GestureDetector(
-                        onTap: () {
-                          proximaPergunta();
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          height: 60,
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 12.0, horizontal: 20.0),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12.0, horizontal: 20.0),
-                          decoration: BoxDecoration(
-                              color: Colors.yellow[300],
-                              border:
-                                  Border.all(color: Colors.yellow, width: 2),
-                              borderRadius: BorderRadius.circular(5),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black38,
-                                  offset: Offset(
-                                    0,
-                                    2,
-                                  ),
-                                  blurRadius: 4.0,
-                                ),
-                              ]),
-                          child: Text(
-                            statusQuiz == StatusQuiz.terminou
-                                ? "See Results"
-                                : "Next",
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                    ? Button(
+                        label: statusQuiz == StatusQuiz.terminou
+                            ? "See Results"
+                            : "Next",
+                        next: proximaPergunta,
                       )
                     : GestureDetector(
                         onTap: () {
