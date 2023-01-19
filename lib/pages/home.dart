@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/models/question.dart';
 import 'package:quiz/repository/questions.dart';
+import 'package:quiz/widgets/option.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -131,50 +132,14 @@ class _HomeState extends State<Home> {
                 ),
                 ...perguntas[perguntaAtual]
                     .options
-                    .map(
-                      (e) => GestureDetector(
-                        onTap: () {
-                          registraResposta(e);
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          height: 60,
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 12.0, horizontal: 20.0),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12.0, horizontal: 20.0),
-                          decoration: BoxDecoration(
-                              color: Colors.grey[100],
-                              border: Border.all(
-                                  color: statusPergunta ==
-                                          StatusPergunta.respondida
-                                      ? e == opcaoSelecionada
-                                          ? e == perguntas[perguntaAtual].answer
-                                              ? Colors.green
-                                              : Colors.red
-                                          : Colors.white
-                                      : Colors.white,
-                                  width: 2),
-                              borderRadius: BorderRadius.circular(5),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black38,
-                                  offset: Offset(
-                                    0,
-                                    2,
-                                  ),
-                                  blurRadius: 4.0,
-                                ),
-                              ]),
-                          child: Text(
-                            e,
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    )
+                    .map((e) => Option(
+                          e: e,
+                          isResondida:
+                              statusPergunta == StatusPergunta.respondida,
+                          isSelecionada: e == opcaoSelecionada,
+                          isCorreta: e == perguntas[perguntaAtual].answer,
+                          registraResposta: registraResposta,
+                        ))
                     .toList(),
                 const SizedBox(height: 50),
                 statusPergunta == StatusPergunta.respondida
