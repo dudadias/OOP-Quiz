@@ -29,7 +29,12 @@ class Result extends StatelessWidget {
             onPressed: () {
               novo();
             },
-            child: const Text("Play Again"),
+            child: const Text(
+              "Play Again",
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
           ),
         ],
       ),
