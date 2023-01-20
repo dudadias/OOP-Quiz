@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/models/question.dart';
+import 'package:quiz/pages/result.dart';
 import 'package:quiz/repository/questions.dart';
 import 'package:quiz/widgets/button.dart';
 import 'package:quiz/widgets/option.dart';
@@ -75,33 +76,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return statusQuiz == StatusQuiz.resultados
-        ? Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Congrats! ",
-                  style: TextStyle(fontSize: 35),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "$acertos/5 points",
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    novoQuiz();
-                  },
-                  child: const Text("Play Again"),
-                ),
-              ],
-            ),
-          )
+        ? Result(acertos: acertos, novo: novoQuiz)
         : Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
